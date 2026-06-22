@@ -1,0 +1,41 @@
+from collections import deque
+class QueueUsingStacks:
+    def __init__(self):
+        self.stack1 = deque()
+        self.stack2 = deque()
+
+    def enqueue(self, item):
+        self.stack1.append(item)
+
+    def dequeue(self):
+        if not self.stack2:
+            while self.stack1:
+                self.stack2.append(self.stack1.pop())
+        if not self.stack2:
+            raise IndexError("dequeue from an empty queue")
+        return self.stack2.pop()
+
+    def is_empty(self):
+        return len(self.stack1) == 0 and len(self.stack2) == 0
+
+    def size(self):
+        return len(self.stack1) + len(self.stack2)
+
+    def peek(self):
+        if not self.stack2:
+            while self.stack1:
+                self.stack2.append(self.stack1.pop())
+        if not self.stack2:
+            raise IndexError("peek from an empty queue")
+        return self.stack2[-1]
+    
+if __name__ == "__main__":
+    q = QueueUsingStacks()
+    q.enqueue(1)
+    q.enqueue(2)
+    q.enqueue(3)
+    print(q.dequeue())  
+    print(q.peek())     
+    print(q.size())     
+    print(q.is_empty())
+    
